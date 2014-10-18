@@ -1,0 +1,247 @@
+/* lg */ 
+@media (min-width: 1200px) {
+  
+}
+
+/* md */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+  .navbar-right {
+    padding: 0 30px 0 0;
+  }
+
+  .navbar-right li a {
+    padding: 35px 15px;
+  }
+
+  .fixed-menu .container {
+    width: 100%;
+  }
+
+  .fixed-menu .navbar-right {
+    padding-right: 30px;
+  }
+
+  .fixed-menu .navbar-right li a {
+    padding: 20px;
+  }
+
+  #education .col-md-9 {
+    z-index: 10;
+  }
+
+
+}
+
+/* sm */
+@media (min-width: 768px) and (max-width: 991px) {
+
+  .navbar-brand {
+    width: 215px;
+    height: 60px;
+  }
+
+  .navbar-right {
+    padding: 0;
+  }
+
+  .navbar-right li a {
+    padding:20px 11px;
+    font-size: 17px;
+  }
+
+  .fixed-menu .container {
+    width: 100%;
+  }
+
+  .fixed-menu .navbar-right {
+    padding-right: 30px;
+  }
+
+  .fixed-menu .navbar-right li a {
+    padding: 20px 15px;
+    font-size: 17px;
+  }
+ 
+}
+
+/* xs */
+@media (max-width: 767px) {
+
+  .main-nav .container {
+    display: none;
+  }
+  
+  .fixed-menu .container {
+    display: block;
+  }
+
+   .fixed-menu .container {
+    width: 100%;
+  }
+
+  .navbar-brand {
+    width: inherit;
+  }
+
+  .fixed-menu .navbar-right li a {
+    padding: 7px 25px;
+  }
+  .intro-divider {
+    width: 100%;
+  }
+
+  .intro-message {
+    padding-bottom: 15%;
+    
+  }
+
+  .intro-message > h2 {
+    font-size: 3em;
+  }
+
+
+  #home {
+    margin-top: 10%;
+  }
+
+  #main-slider  {
+    bottom: 17%;
+    padding: 10px;
+    line-height: 0;
+  }
+
+  #main-slider .carousel-caption h2 {
+    font-size: 20px;
+    margin-top: 3px;
+  }
+
+  #main-slider .carousel-caption h4 {
+    font-size: 16px;
+  }
+
+  #main-slider .carousel-caption a {
+    font-size: 14px;
+    color: #2da1c5;
+  }
+
+  #education {
+    background-size:cover;
+  }
+
+  #education h2 {
+    float: inherit;
+    font-size: 30px;
+    margin-bottom: 30px;
+  }  
+
+  #footer {
+    font-size: 16px;
+  }
+
+  .contact-section {
+    background-position: left 0 bottom 0;
+    background-size: cover;
+  }
+
+  .about-content {
+    width: 100%;    
+    padding: 70px 25px 110px;
+  }
+
+}
+
+/* XS Portrait */
+@media (max-width: 479px) {
+
+  .main-nav .container {
+    display: none;
+  }
+
+  .fixed-menu .container {
+    display: block;
+  }
+
+  .fixed-menu .navbar-right li a {
+    padding: 10px 25px;
+  }
+
+  /* Home */
+
+  #home {
+    margin-top: 18%;
+  }
+
+  .fixed-menu .container {
+    width: 100%;
+  }
+
+  .navbar-brand {
+    width: inherit;
+  }
+
+
+  #main-slider {
+    bottom: 17%;
+    padding: 10px;
+    line-height: 0;
+  }
+
+  #main-slider h2 {
+    font-size: 18px;
+    margin-top: 3px;
+  }
+
+  #main-slider h4 {
+    font-size: 14px;
+  }
+
+  #main-slider a {
+    font-size: 12px;
+    color: #2da1c5;
+  }
+
+  
+  /* Edcation */
+  #education {
+    background-size:cover;
+  }
+
+  #education h2 {
+    float: inherit;
+    font-size: 30px;
+    margin-bottom: 30px;
+  }  
+
+  
+  .about-content {
+    width: 100%;    
+    padding: 70px 30px 110px;
+  }
+
+  #education h2
+  #skills h2, 
+  #about h2, 
+  #sponsor h2 {
+    font-size: 30px;
+  }
+
+  .about-content p, {
+    font-size: 15px;
+  }
+
+  #sponsor .item ul li:last-child {
+    margin-right: 0;
+   }
+ 
+  #footer {
+    font-size: 14px;
+  }
+
+  .contact-section {
+    background-position: left 0 bottom 0;
+    background-size: cover;
+  }
+
+}
+
