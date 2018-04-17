@@ -78,5 +78,5 @@ class MainHandler(webapp2.RequestHandler):
 		
 	def display(self,template_values):
 
-		template = JINJA_ENVIRONMENT.get_template('static/templates/index.html')
+		template = JINJA_ENVIRONMENT.get_template('static/index.html')
 		self.response.write(template.render(template_values))
