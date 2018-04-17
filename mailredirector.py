@@ -3,14 +3,15 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.mail_handlers import InboundMailHandler
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.api import mail
+import config
 
 
 # This class is a mail redirector application that forwards the mail sent to the website to its owner.
-# Mail sent to info@harry-potter.appspotmail.com
 class MailRedirector(InboundMailHandler):
 
-    ##Replace 'harry-potter' with website name, 'info' can be also be changed. eg. mail@yourwesbite.appspotmail.com
-    sender = "\"Harry Potter\" <info@harry-potter.appspotmail.com>"
+    """Mail Sent to the mail server is to be redirected """
+    
+    sender = "\""+config.OWNER_NAME+"\" <"+config.WEBSITE_MAIL_SERVER+">"
 
     
 
@@ -39,9 +40,8 @@ class MailRedirector(InboundMailHandler):
 
 
         # compute the address to forward to    
-        ##Change it to the owner's email address. eg. yourownemailaddress@example.com
 
-        oumsg.to = "harrypotteremailid@gmail.com";
+        oumsg.to = config.OWNER_MAIL_ID
         # at least we are allowed to set an arbitrary subject :)
         oumsg.subject = inmsg.subject
 

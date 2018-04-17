@@ -4,83 +4,107 @@ import webapp2
 import urllib2,json
 import jinja2
 import os
-
+import yaml
 from google.appengine.api import mail
 from google.appengine.api import users
+import config
 
 JINJA_ENVIRONMENT = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
-    extensions=['jinja2.ext.autoescape'],
-    autoescape=True)
+	loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
+	extensions=['jinja2.ext.autoescape'],
+	autoescape=True)
 
 
+def jsonify_response(func):
+	""" Make the response REST compatible """
+
+	def response_decorator(*args, **kw):
+
+		_post_fn=func(*args, **kw)
+		try:
+			_origin = args[0].request.headers['Origin']
+		except:
+			_origin = settings.ORIGIN_SITE_NAME
+
+		args[0].response.headers.add_header('Content-Type', 'application/json')
+
+		if _post_fn:
+			args[0].response.write(json.dumps(_post_fn))
+		else:
+			args[0].response.write({"status": 400, "message": "Invalid request"})
+
+	return response_decorator
 
 class MainHandler(webapp2.RequestHandler):
 
-	##Gets the post request from 'Query Box' in index.html
+	@jsonify_response	
 	def post(self):
-		
 		##Gets the subject and msg contents
-		subject=self.request.get('subject')
-		message = self.request.get('message');
-		user = users.get_current_user();
+		_response={}
+		
 
-		##Validates if user has logged in with their Gmail id else it will redirect to login menu.
-		output=self.validate(subject,message,user);
-		output=json.dumps(output)
-		self.response.out.write(output)
+		# _body = self.request.body.encode("utf-8")
+
+		# try:
+		# 	_json = json.loads(_body,encoding="utf-8")
+		# except:
+		# 	_json = None
+		# 	self.abort(400)
+
+		# if _json:
+		# 	self.response.set_status(201,"sucess")
+		# 	_response["status"]=True
+		# 	_response["message"]="Mail Sent"
+
+		_subject=self.request.get('subject')
+		_message = self.request.get('message')
+		_sender_mail_id = self.request.get('email')
+
+		print(" ------------------------- ")
+		print(_subject)
+		print(_message)
+		print(_sender_mail_id)
+
+		# _message = _json['message']
+		# _subject = _json['subject']
+		# _sender_mail_id = _json['email']
+		
+		self.send_mail(_subject, _message, _sender_mail_id);
+		
+		return _response
 		
 		
 		
 
 
 
-	def validate(self,subject,messagebody,user):
-		msg="failed"
-		##Replace 'harry-potter' with website name, 'info' can be also be changed. eg. mail@yourwesbite.appspotmail.com
-		sender = "\"Harry Potter\" <info@harry-potter.appspotmail.com>"
-
-
-
-		if user is None:
-			login_url = users.create_login_url(self.request.path)
-
-			#print login_url;
-			#self.redirect(login_url)
-			return {'login_url':login_url,'message':msg}
-
-
-		##Sends query details to the owner of the app-engine
+	def send_mail(self, subject, messagebody, user):
+		""" Sends mail to both the parties """
+		
+		sender = "\""+config.OWNER_NAME+"\" <"+config.WEBSITE_MAIL_SERVER+">"
 		message = mail.EmailMessage()
+
+		############################ Copy of contnet to personal mail id ###################
 		message.sender = sender
-		##Change it to the owner's email address. eg. yourownemailaddress@example.com
-		message.to = "harrypotteremailid@gmail.com";
-		message.subject=subject;
-		message.body="""Sender: """+str(user)+"""
+		
+		message.to = config.OWNER_MAIL_ID
+		message.subject = subject
+		message.body = """Sender: """+str(user)+"""
 		Content:->
 		"""+messagebody;
 		message.send()
+		###################################################################################
 
-		##Notfication mail to the visitor
+		
+		########################## Notification Mail to Sender ############################
+		_user_name = user.split("@")[0]
+
 		message.sender = sender
-		message.to = user.email()
-		message.subject="Notification mail, Your message has been recieved"
-		message.body = """
-Hi,
-
-Thank you for visiting my profile, I will reply to you shortly.
-
-Regards,
-Harry Potter
-
-PS: This is a computer generated message, please do not respond to it.
-""" 
+		message.to = user
+		message.subject = config.MAIL_SIGNATURE['SUBJECT'].format(config.OWNER_NAME)
+		message.body = config.MAIL_SIGNATURE['BODY'].format(_user_name, config.OWNER_NAME)
 		message.send()
-		
-		
-		return {'login_url':"",'message':"sucess"};
-
-
+		###################################################################################
 		
 
 
@@ -95,5 +119,3 @@ PS: This is a computer generated message, please do not respond to it.
 
 		template = JINJA_ENVIRONMENT.get_template('templates/index.html')
 		self.response.write(template.render(template_values))
-		pass
-		return;
