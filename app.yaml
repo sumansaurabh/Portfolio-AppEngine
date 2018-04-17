@@ -1,4 +1,4 @@
-application: harry-potter-website
+application: game-2024
 version: 1
 runtime: python27
 api_version: 1
@@ -23,7 +23,7 @@ handlers:
   upload: .+\.(svg|eot|ttf|woff|html|pdf)$
   application_readable: true
 
-- url: /_ah/mail/info@.*harry-potter\.appspotmail\.com
+- url: /_ah/mail/info@.*game-2024\.appspotmail\.com
   script: mailredirector.application
   login: admin
 

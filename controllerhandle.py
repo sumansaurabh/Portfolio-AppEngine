@@ -15,63 +15,24 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 	autoescape=True)
 
 
-def jsonify_response(func):
-	""" Make the response REST compatible """
 
-	def response_decorator(*args, **kw):
-
-		_post_fn=func(*args, **kw)
-		try:
-			_origin = args[0].request.headers['Origin']
-		except:
-			_origin = settings.ORIGIN_SITE_NAME
-
-		args[0].response.headers.add_header('Content-Type', 'application/json')
-
-		if _post_fn:
-			args[0].response.write(json.dumps(_post_fn))
-		else:
-			args[0].response.write({"status": 400, "message": "Invalid request"})
-
-	return response_decorator
 
 class MainHandler(webapp2.RequestHandler):
 
-	@jsonify_response	
 	def post(self):
 		##Gets the subject and msg contents
 		_response={}
 		
 
-		# _body = self.request.body.encode("utf-8")
-
-		# try:
-		# 	_json = json.loads(_body,encoding="utf-8")
-		# except:
-		# 	_json = None
-		# 	self.abort(400)
-
-		# if _json:
-		# 	self.response.set_status(201,"sucess")
-		# 	_response["status"]=True
-		# 	_response["message"]="Mail Sent"
-
 		_subject=self.request.get('subject')
 		_message = self.request.get('message')
 		_sender_mail_id = self.request.get('email')
-
-		print(" ------------------------- ")
-		print(_subject)
-		print(_message)
-		print(_sender_mail_id)
-
-		# _message = _json['message']
-		# _subject = _json['subject']
-		# _sender_mail_id = _json['email']
 		
-		self.send_mail(_subject, _message, _sender_mail_id);
+		self.send_mail(_subject, _message, _sender_mail_id)
+		self.response.set_status(201,"sucess")
+		self.response.headers.add_header('Content-Type', 'application/json')
+		self.response.write(json.dumps({"status": True, "message": "Sent Mail"}))
 		
-		return _response
 		
 		
 		

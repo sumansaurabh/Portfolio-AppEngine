@@ -5,8 +5,11 @@ $(document).ready(function(){
     	var msg = $("#messageid").val();
       var emailid= $("#emailid").val();
     	var data={"subject":subject, "message":msg, "email": emailid};
-      data = {"subject": "Test subject", "message": "test message", "email": "suman@q.com"};
-      console.log(data);
+
+      if(emailid.indexOf('@') < 1) {
+        alert("Invalid email Id");
+        return;
+      }
     
       
         $.ajax({
