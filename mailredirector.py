@@ -17,6 +17,19 @@ class MailRedirector(InboundMailHandler):
 
     # Called by GAE when an email is received.
     def receive(self, inmsg):
+        """
+        Called by GAE when an email is received.
+
+        Args:
+            inmsg: The received email message.
+
+        Raises:
+            None
+
+        Returns:
+            None
+        """
+
         # log this msg for kicks
         # download the logs to dev machine using:
         # appcfg.py --severity=0 request_logs <appname> <file_to_dump>        if not hasattr(inmsg, 'subject'):
