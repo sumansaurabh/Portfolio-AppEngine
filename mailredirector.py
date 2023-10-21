@@ -26,9 +26,6 @@ class MailRedirector(InboundMailHandler):
                     ", to " + inmsg.to + ", subject: " + inmsg.subject)
         # now make a message object that can be submitted to GAE
         oumsg = mail.EmailMessage()
-
-
-        
         oumsg.sender = MailRedirector.sender
         # TODO distinguish between error messages and potential loop/spoof.
         inmsg_email_address = email.utils.parseaddr(inmsg.sender)[1]
